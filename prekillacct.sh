@@ -90,7 +90,7 @@ filename=$backupdir/cpmove-${cp_user}.tar.gz
 if [ -f $filename ] && [ "$(find $output -mtime 0 | wc -l)" -gt 0 ]
 then
     echo
-    echo $ME: $cp_user: not overwriting as existing backup is less than 24 hours old
+    echo "$ME: $cp_user: Exiting, as backup already exists in destination directory and is less than 24 hours old"
     echo
 else
     /scripts/pkgacct $cp_user $backupdir
