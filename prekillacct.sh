@@ -16,7 +16,25 @@
 # To do:
 # add helptext
 # Add error checking/failing
+# add exclude, to reduce size of backup.
 #=================
+
+#====================================
+#   Do we want to skip the backup? -- allows killacct to be run
+#     on the CLI, without creating the backup.
+#====================================
+echo -n "Do you want to skip the backup creation? [y/N] (3 second timeout, default to no) "
+read -t 3 answer
+
+if [ $answer == "y" ] ; then
+        echo "backup aborted"
+        exit 0
+else
+        echo "backup not aborted" >> /tmp/prekillacct.log
+fi
+
+#====================================
+
 ME=${0##*/}
 backupdir=/backup/suspended-acct-backups
 
@@ -31,6 +49,7 @@ if [[ ! -d "$backupdir"  && ! -L "$backupdir" ]]; then
 	echo 'Backup dir does not exist, creating backup directory'
 	mkdir -p $backupdir -v
 fi
+
 
 #====================================
 #   Parse argument pairs
